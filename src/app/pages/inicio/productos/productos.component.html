@@ -19,6 +19,7 @@
       <thead class="table-dark">
         <tr>
           <th scope="col">#</th>
+          <th scope="col">Imagen</th>
           <th scope="col">Nombre</th>
           <th scope="col">Precio</th>
           <th scope="col">Stock</th>
@@ -29,11 +30,21 @@
           <th scope="col">Editar</th>
           <th scope="col">Cambiar Estado</th>
           <th scope="col">Eliminar</th>
+          <th scope="col">Cambiar Imagen</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let producto of productos">
           <th scope="row">{{ producto.id }}</th>
+          <th scope="row">
+            <a href="/inicio">
+              <img
+                class="img-fluid"
+                style="max-width: 100px"
+                src="https://localhost:7161/uploads/{{ producto.id }}.png"
+              />
+            </a>
+          </th>
           <td>{{ producto.nombre }}</td>
           <td>${{ producto.precio }}</td>
           <td>{{ producto.stock }}</td>
@@ -82,8 +93,23 @@
               Eliminar
             </button>
           </td>
+          <td>
+            <button
+              class="btn btn-primary btn-sm"
+              (click)="mostrarFormularioImagen(producto.id)"
+            >
+              Cambiar
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
   </div>
 </div>
+
+<app-cambiar-imagen
+  *ngIf="mostrarModalImagen"
+  [productoId]="productoSeleccionadoId!"
+  [visible]="mostrarModalImagen"
+  (onCerrar)="cerrarModalImagen()"
+></app-cambiar-imagen>

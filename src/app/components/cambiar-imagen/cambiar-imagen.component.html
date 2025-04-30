@@ -1,0 +1,19 @@
+<div class="modal-backdrop" *ngIf="visible">
+  <div class="modal-content">
+    <h3>Cambiar imagen del producto #{{ productoId }}</h3>
+
+    <input
+      type="file"
+      (change)="seleccionarArchivo($event)"
+      class="file-input"
+    />
+
+    <button (click)="subirImagen()" [disabled]="cargando">
+      {{ cargando ? "Subiendo..." : "Subir Imagen" }}
+    </button>
+
+    <div class="mensaje" *ngIf="mensaje">{{ mensaje }}</div>
+
+    <button class="cerrar" (click)="cerrar()">Cerrar</button>
+  </div>
+</div>

@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ProductoService, Producto } from '../../../services/producto.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { CambiarImagenComponent } from '../../../components/cambiar-imagen/cambiar-imagen.component';
 
 @Component({
   selector: 'app-productos',
   templateUrl: './productos.component.html',
   styleUrls: ['./productos.component.css'],
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, CambiarImagenComponent],
 })
 export class ProductosComponent implements OnInit {
 
@@ -53,5 +54,20 @@ export class ProductosComponent implements OnInit {
         }
       });
     }
+  }
+  productoSeleccionadoId: number | null = null;
+  mostrarModalImagen = false;
+
+  mostrarFormularioImagen(productoId: number) {
+    this.productoSeleccionadoId = productoId;
+    this.mostrarModalImagen = true;
+  }
+
+  cacheBuster = Date.now(); // valor inicial
+
+  cerrarModalImagen() {
+    this.mostrarModalImagen = false;
+    this.cacheBuster = Date.now(); // fuerza recarga de imagen
+    this.ngOnInit();
   }
 }
