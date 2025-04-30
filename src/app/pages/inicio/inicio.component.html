@@ -1,0 +1,26 @@
+<div class="container py-4">
+  <!-- Barra superior -->
+  <nav class="navbar navbar-expand-lg bg-white shadow-sm rounded px-4 mb-4">
+    <div class="container-fluid justify-content-between">
+      <div>
+        <h2 class="mb-0 text-primary fw-semibold">
+          Bienvenido, {{ username }}
+        </h2>
+      </div>
+
+      <div class="d-flex gap-2">
+        <a routerLink="/inicio/agregar-producto" class="btn btn-success">
+          <i class="bi bi-plus-circle me-1"></i> Agregar Producto
+        </a>
+        <button class="btn btn-outline-danger" (click)="logout()">
+          Cerrar sesión
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contenido dinámico -->
+  <div class="mt-4">
+    <router-outlet></router-outlet>
+  </div>
+</div>

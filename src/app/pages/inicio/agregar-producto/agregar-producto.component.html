@@ -1,0 +1,90 @@
+<div class="container py-4">
+  <h2 class="text-center text-primary mb-4">Agregar Nuevo Producto</h2>
+
+  <!-- Mensaje de éxito -->
+  <div *ngIf="successMessage" class="alert alert-success text-center">
+    {{ successMessage }}
+  </div>
+
+  <!-- Mensaje de error -->
+  <div *ngIf="errorMessage" class="alert alert-danger text-center">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Formulario para agregar el producto -->
+  <form (ngSubmit)="agregarProducto()" class="card shadow-lg p-4">
+    <div class="mb-3">
+      <label for="nombre" class="form-label">Nombre</label>
+      <input
+        type="text"
+        id="nombre"
+        class="form-control"
+        [(ngModel)]="nombre"
+        name="nombre"
+        required
+        placeholder="Ingrese el nombre del producto"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="precio" class="form-label">Precio</label>
+      <input
+        type="number"
+        id="precio"
+        class="form-control"
+        [(ngModel)]="precio"
+        name="precio"
+        required
+        placeholder="Ingrese el precio del producto"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="stock" class="form-label">Stock</label>
+      <input
+        type="number"
+        id="stock"
+        class="form-control"
+        [(ngModel)]="stock"
+        name="stock"
+        required
+        placeholder="Ingrese la cantidad en stock"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="descuento" class="form-label">Descuento (%)</label>
+      <input
+        type="number"
+        id="descuento"
+        class="form-control"
+        [(ngModel)]="descuento"
+        name="descuento"
+        required
+        placeholder="Ingrese el porcentaje de descuento"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="categoriaId" class="form-label">Categoría</label>
+      <select
+        id="categoriaId"
+        class="form-select"
+        [(ngModel)]="categoriaId"
+        name="categoriaId"
+        required
+      >
+        <option *ngFor="let categoria of categorias" [value]="categoria.id">
+          {{ categoria.nombre }}
+        </option>
+      </select>
+    </div>
+
+    <div class="d-flex justify-content-between">
+      <button type="submit" class="btn btn-success">Guardar Producto</button>
+      <a [routerLink]="['/inicio/productos']" class="btn btn-secondary">
+        Volver a la lista de productos
+      </a>
+    </div>
+  </form>
+</div>
