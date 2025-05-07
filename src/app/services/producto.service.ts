@@ -15,6 +15,7 @@ export interface Producto {
   descuento: number;
   estado: boolean;
   categoria: Categoria;
+  imagen: string;
 }
 
 @Injectable({
@@ -22,8 +23,8 @@ export interface Producto {
 })
 export class ProductoService {
 
-  private apiUrl = 'https://localhost:7161/kirbbo/productos';
-  private categoriasUrl = 'https://localhost:7161/kirbbo/categorias';
+  private apiUrl = 'https://localhost:44356/kirbbo/productos';
+  private categoriasUrl = 'https://localhost:44356/kirbbo/categorias';
 
   constructor(private http: HttpClient) { }
 

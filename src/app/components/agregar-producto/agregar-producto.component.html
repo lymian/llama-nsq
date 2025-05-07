@@ -1,0 +1,141 @@
+<div class="add-product-container">
+  <h2 class="title">
+    <i class="bi bi-plus-circle"></i> Agregar Nuevo Producto
+  </h2>
+
+  <!-- Mensaje de éxito -->
+  <div class="success-message" *ngIf="successMessage">
+    <span>{{ successMessage }}</span>
+  </div>
+
+  <!-- Mensaje de error -->
+  <div class="error-message" *ngIf="errorMessage">
+    <span>{{ errorMessage }}</span>
+  </div>
+
+  <!-- Formulario para agregar el producto -->
+  <form (ngSubmit)="agregarProducto()" #form="ngForm" class="product-form">
+    <div class="form-group">
+      <!-- Nombre -->
+      <label for="nombre" class="form-label">Nombre</label>
+      <input
+        type="text"
+        id="nombre"
+        [(ngModel)]="nombre"
+        name="nombre"
+        required
+        placeholder="Ingrese el nombre del producto"
+        class="form-input"
+      />
+    </div>
+
+    <!-- Precio -->
+    <div class="form-group">
+      <label for="precio" class="form-label">Precio</label>
+      <div class="input-group">
+        <span class="input-prefix">$</span>
+        <input
+          type="number"
+          step="0.01"
+          id="precio"
+          [(ngModel)]="precio"
+          name="precio"
+          required
+          placeholder="0.00"
+          class="form-input"
+          min="1"
+        />
+      </div>
+      <div
+        class="error-message"
+        *ngIf="precio < 1"
+        [ngClass]="{ 'error-visible': precio < 1 }"
+      >
+        <span>El precio no puede ser menor a 1</span>
+      </div>
+    </div>
+
+    <!-- Stock -->
+    <div class="form-group">
+      <label for="stock" class="form-label">Stock</label>
+      <input
+        type="number"
+        id="stock"
+        [(ngModel)]="stock"
+        name="stock"
+        required
+        placeholder="Ingrese la cantidad en stock"
+        class="form-input"
+        min="0"
+      />
+      <!-- Mensaje de error -->
+      <div
+        class="error-message"
+        *ngIf="stock < 0"
+        [ngClass]="{ 'error-visible': stock < 0 }"
+      >
+        <span>El stock no puede ser negativo</span>
+      </div>
+    </div>
+
+    <!-- Descuento -->
+    <div class="form-group">
+      <label for="descuento" class="form-label">Descuento (%)</label>
+      <div class="input-group">
+        <input
+          type="number"
+          id="descuento"
+          [(ngModel)]="descuento"
+          name="descuento"
+          required
+          placeholder="0"
+          class="form-input"
+          max="50"
+          min="0"
+        />
+        <span class="input-suffix">%</span>
+      </div>
+      <div
+        class="error-message"
+        *ngIf="descuento > 50"
+        [ngClass]="{ 'error-visible': descuento > 50 }"
+      >
+        <span>El descuento no puede ser mayor al 50%</span>
+      </div>
+      <div
+        class="error-message"
+        *ngIf="descuento < 0"
+        [ngClass]="{ 'error-visible': descuento < 0 }"
+      >
+        <span>El descuento no puede ser negativo</span>
+      </div>
+    </div>
+
+    <!-- Categoría -->
+    <div class="form-group">
+      <label for="categoriaId" class="form-label">Categoría</label>
+      <select
+        id="categoriaId"
+        [(ngModel)]="categoriaId"
+        name="categoriaId"
+        required
+        class="form-select"
+      >
+        <option value="" disabled selected>Seleccione una categoría</option>
+        <option *ngFor="let categoria of categorias" [value]="categoria.id">
+          {{ categoria.nombre }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Botones -->
+    <div class="form-actions">
+      <button type="submit" [disabled]="form.invalid" class="btn btn-primary">
+        Guardar Producto
+      </button>
+      <a [routerLink]="['/inicio/productos']" class="btn btn-secondary">
+        Volver a la lista
+      </a>
+    </div>
+  </form>
+</div>

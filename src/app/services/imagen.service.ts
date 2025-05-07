@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class ImagenService {
 
-  private apiUrl = 'https://localhost:7161/kirbbo/imagen';
+  private apiUrl = 'https://localhost:44356/kirbbo/imagen';
 
   constructor(private http: HttpClient) { }
 

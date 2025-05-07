@@ -1,0 +1,81 @@
+<div class="order-details-container" *ngIf="pedido">
+  <!-- Encabezado -->
+  <div class="header">
+    <h1 class="title">
+      <i class="bi bi-file-earmark-text"></i> Detalles del Pedido #{{
+        pedido.boletaId
+      }}
+    </h1>
+    <button class="btn btn-secondary" (click)="volver()">
+      <i class="bi bi-arrow-left"></i> Volver
+    </button>
+  </div>
+
+  <!-- Información del Cliente y Pedido -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h5 class="card-title">Datos del Cliente</h5>
+      <ul class="client-info">
+        <li>
+          <span class="label">Nombre:</span>
+          <span>{{ pedido.nombreCliente }} {{ pedido.apellidoCliente }}</span>
+        </li>
+        <li>
+          <span class="label">Dirección:</span>
+          <span>{{ pedido.direccion }}</span>
+        </li>
+        <li>
+          <span class="label">Fecha de Emisión:</span>
+          <span>{{ pedido.fechaEmision | date : "fullDate" }}</span>
+        </li>
+        <li>
+          <span class="label">Estado:</span>
+          <span class="status" [ngClass]="getClaseEstado(pedido.estado)">
+            {{ getNombreEstado(pedido.estado) }}
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Detalles del Pedido -->
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h5 class="card-title">Detalle de Productos</h5>
+      <div *ngIf="pedido.detalles.length > 0; else sinProductos">
+        <div class="table-container">
+          <table class="order-table">
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let detalle of pedido.detalles">
+                <td>{{ detalle.nombreProducto }}</td>
+                <td>{{ detalle.cantidad }}</td>
+                <td>S/ {{ detalle.precioUnitario | number : "1.2-2" }}</td>
+                <td>S/ {{ detalle.subtotal | number : "1.2-2" }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="total">Total: S/ {{ pedido.total | number : "1.2-2" }}</div>
+        <div *ngIf="pedido.estado == 0" class="actions">
+          <button class="btn btn-primary" (click)="finalizarPedido()">
+            <i class="bi bi-check"></i> Procesar Pedido
+          </button>
+        </div>
+      </div>
+      <ng-template #sinProductos>
+        <div class="alert alert-warning">
+          <i class="bi bi-exclamation-triangle"></i> Este pedido no contiene
+          productos.
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

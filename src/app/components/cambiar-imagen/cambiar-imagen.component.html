@@ -1,19 +1,76 @@
-<div class="modal-backdrop" *ngIf="visible">
-  <div class="modal-content">
-    <h3>Cambiar imagen del producto #{{ productoId }}</h3>
+<div
+  class="modal"
+  [ngClass]="{ show: visible }"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="modalTitle"
+  aria-hidden="true"
+  *ngIf="visible"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Encabezado -->
+      <div class="modal-header">
+        <h3 id="modalTitle" class="modal-title">
+          Cambiar imagen del producto #{{ productoId }}
+        </h3>
+        <button
+          type="button"
+          class="btn-close"
+          aria-label="Cerrar"
+          (click)="cerrar()"
+        >
+          <i class="bi bi-x"></i>
+        </button>
+      </div>
 
-    <input
-      type="file"
-      (change)="seleccionarArchivo($event)"
-      class="file-input"
-    />
+      <!-- Cuerpo -->
+      <div class="modal-body">
+        <!-- Input para seleccionar archivo -->
+        <div class="form-group">
+          <label for="fileInput" class="form-label">Seleccionar imagen</label>
+          <input
+            type="file"
+            id="fileInput"
+            accept="image/*"
+            (change)="seleccionarArchivo($event)"
+            class="form-input"
+          />
+        </div>
 
-    <button (click)="subirImagen()" [disabled]="cargando">
-      {{ cargando ? "Subiendo..." : "Subir Imagen" }}
-    </button>
+        <!-- Mensaje -->
+        <div
+          class="message"
+          *ngIf="mensaje"
+          [ngClass]="{
+            'success-message': !mensaje.includes('Error'),
+            'error-message': mensaje.includes('Error')
+          }"
+        >
+          <span>{{ mensaje }}</span>
+        </div>
+      </div>
 
-    <div class="mensaje" *ngIf="mensaje">{{ mensaje }}</div>
-
-    <button class="cerrar" (click)="cerrar()">Cerrar</button>
+      <!-- Pie -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cerrar()">
+          Cerrar
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="subirImagen()"
+          [disabled]="cargando"
+        >
+          <span
+            class="spinner"
+            role="status"
+            aria-hidden="true"
+            *ngIf="cargando"
+          ></span>
+          {{ cargando ? "Subiendo..." : "Subir Imagen" }}
+        </button>
+      </div>
+    </div>
   </div>
 </div>

@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ProductoService } from '../../../../services/producto.service';
+import { ProductoService } from '../../services/producto.service';
 import { RouterLink } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-editar-producto',
@@ -61,8 +62,21 @@ export class EditarProductoComponent implements OnInit {
 
   actualizarProducto() {
     this.productoService.actualizarProducto(this.productoId, this.productoForm).subscribe({
-      next: () => this.router.navigate(['/inicio/productos']),
-      error: () => this.errorMessage = 'Error al actualizar producto'
+      next: () => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Producto actualizado',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(() => {
+          this.router.navigate(['/inicio/productos']);
+        });
+      },
+      error: (err) => {
+        this.errorMessage = 'Error al actualizar producto';
+        console.error(err);
+      }
+
     });
   }
 }

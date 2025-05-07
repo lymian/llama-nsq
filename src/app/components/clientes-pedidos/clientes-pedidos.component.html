@@ -1,0 +1,92 @@
+<div class="history-container">
+  <div class="header">
+    <h2 class="title">
+      <i class="bi bi-clock-history"></i> Historial de Pedidos
+    </h2>
+    <button class="btn btn-secondary" (click)="volver()">
+      <i class="bi bi-arrow-left"></i> Volver
+    </button>
+  </div>
+
+  <!-- Lista de pedidos -->
+  <div
+    class="timeline"
+    *ngIf="pedidos && pedidos.length > 0; else sinHistorial"
+  >
+    <div class="timeline-item" *ngFor="let pedido of pedidos">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <div class="card-header">
+            <h5 class="card-title">
+              Pedido #{{ pedido.boletaId }}
+              <span class="status" [ngClass]="getClaseEstado(pedido.estado)">
+                {{ getNombreEstado(pedido.estado) }}
+              </span>
+            </h5>
+          </div>
+          <ul class="order-info">
+            <li>
+              <span class="label">Cliente:</span>
+              <span
+                >{{ pedido.nombreCliente }} {{ pedido.apellidoCliente }}</span
+              >
+            </li>
+            <li>
+              <span class="label">Fecha:</span>
+              <span>{{ pedido.fechaEmision | date : "medium" }}</span>
+            </li>
+            <li>
+              <span class="label">Dirección:</span>
+              <span>{{ pedido.direccion }}</span>
+            </li>
+          </ul>
+
+          <!-- Detalles del Pedido -->
+          <div class="order-details">
+            <h6 class="details-title">Productos</h6>
+            <div *ngIf="pedido.detalles.length > 0; else sinProductos">
+              <div class="table-container">
+                <table class="order-table">
+                  <thead>
+                    <tr>
+                      <th>Producto</th>
+                      <th>Cantidad</th>
+                      <th>Precio Unitario</th>
+                      <th>Subtotal</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let detalle of pedido.detalles">
+                      <td>{{ detalle.nombreProducto }}</td>
+                      <td>{{ detalle.cantidad }}</td>
+                      <td>
+                        S/ {{ detalle.precioUnitario | number : "1.2-2" }}
+                      </td>
+                      <td>S/ {{ detalle.subtotal | number : "1.2-2" }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="total">
+                Total: S/ {{ pedido.total | number : "1.2-2" }}
+              </div>
+            </div>
+            <ng-template #sinProductos>
+              <div class="alert alert-warning">
+                <i class="bi bi-exclamation-triangle"></i> Este pedido no tiene
+                productos.
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mensaje si no hay historial -->
+  <ng-template #sinHistorial>
+    <div class="alert alert-info">
+      <i class="bi bi-info-circle"></i> No hay pedidos en el historial.
+    </div>
+  </ng-template>
+</div>

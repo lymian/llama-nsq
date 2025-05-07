@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ImagenService } from '../../services/imagen.service';
 import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-cambiar-imagen',
@@ -25,6 +26,16 @@ export class CambiarImagenComponent {
 
   subirImagen(): void {
     if (!this.imagenSeleccionada || !this.productoId) return;
+
+    //permitir solo .png
+    if (this.imagenSeleccionada.type !== 'image/png') {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Solo se permiten imágenes en formato PNG'
+      });
+      return;
+    }
 
     this.cargando = true;
     this.imagenService.subirImagen(this.imagenSeleccionada, this.productoId).subscribe({

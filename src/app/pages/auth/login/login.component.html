@@ -1,41 +1,118 @@
 <div class="container d-flex justify-content-center align-items-center vh-100">
-  <div class="card p-4 shadow-lg" style="max-width: 400px; width: 100%">
-    <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
-      <h2 class="text-center mb-4">Iniciar Sesión</h2>
-
-      <div class="mb-3">
-        <label for="username" class="form-label">Usuario</label>
-        <input
-          id="username"
-          formControlName="username"
-          type="text"
-          class="form-control"
-          placeholder="Ingresa tu usuario"
-        />
+  <div
+    class="card p-4 shadow-lg border-0 rounded-3"
+    style="max-width: 400px; width: 100%"
+  >
+    <form
+      (ngSubmit)="onSubmit()"
+      [formGroup]="loginForm"
+      class="needs-validation"
+      novalidate
+    >
+      <div class="text-center mb-4">
+        <h2 class="fw-bold text-primary">Iniciar Sesión</h2>
+        <p class="text-muted">Ingresa tus credenciales para acceder</p>
       </div>
 
       <div class="mb-3">
-        <label for="password" class="form-label">Contraseña</label>
-        <input
-          id="password"
-          formControlName="password"
-          type="password"
-          class="form-control"
-          placeholder="Ingresa tu contraseña"
-        />
+        <label for="username" class="form-label fw-medium">Usuario</label>
+        <div class="input-group">
+          <span class="input-group-text bg-light"
+            ><i class="bi bi-person"></i
+          ></span>
+          <input
+            id="username"
+            formControlName="username"
+            type="text"
+            class="form-control"
+            placeholder="Ingresa tu usuario"
+            required
+            [ngClass]="{
+              'is-invalid':
+                loginForm.get('username')?.invalid &&
+                loginForm.get('username')?.touched
+            }"
+          />
+          <div class="invalid-feedback">
+            Por favor, ingresa un usuario válido.
+          </div>
+        </div>
       </div>
 
+      <div class="mb-3">
+        <label for="password" class="form-label fw-medium">Contraseña</label>
+        <div class="input-group">
+          <span class="input-group-text bg-light"
+            ><i class="bi bi-lock"></i
+          ></span>
+          <input
+            id="password"
+            formControlName="password"
+            type="password"
+            class="form-control"
+            placeholder="Ingresa tu contraseña"
+            required
+            [ngClass]="{
+              'is-invalid':
+                loginForm.get('password')?.invalid &&
+                loginForm.get('password')?.touched
+            }"
+          />
+          <div class="invalid-feedback">
+            Por favor, ingresa una contraseña válida.
+          </div>
+        </div>
+      </div>
       <button
         type="submit"
-        class="btn btn-primary w-100"
+        class="btn btn-primary w-100 py-2 fw-medium"
         [disabled]="loginForm.invalid"
       >
-        Ingresar
+        <span *ngIf="!loading">Ingresar</span>
+        <span
+          *ngIf="loading"
+          class="spinner-border spinner-border-sm"
+          role="status"
+          aria-hidden="true"
+        ></span>
       </button>
-
-      <div *ngIf="errorMessage" class="alert alert-danger mt-3">
-        {{ errorMessage }}
-      </div>
     </form>
   </div>
 </div>
+
+<style>
+  .card {
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+  }
+
+  .input-group-text {
+    border-right: 0;
+  }
+
+  .form-control {
+    border-left: 0;
+  }
+
+  .form-control:focus {
+    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+  }
+
+  .invalid-feedback {
+    font-size: 0.875rem;
+  }
+</style>

@@ -1,26 +1,60 @@
-<div class="container py-4">
-  <!-- Barra superior -->
-  <nav class="navbar navbar-expand-lg bg-white shadow-sm rounded px-4 mb-4">
-    <div class="container-fluid justify-content-between">
-      <div>
-        <h2 class="mb-0 text-primary fw-semibold">
-          Bienvenido, {{ username }}
-        </h2>
-      </div>
+<div class="dashboard-container">
+  <!-- Menú lateral -->
+  <nav class="sidebar">
+    <!-- Header con logo y nombre -->
+    <div class="sidebar-header">
+      <img src="assets/images/logo.jpg" alt="Logo" class="logo" />
+      <h4 class="username">Hola, {{ username }}</h4>
+    </div>
 
-      <div class="d-flex gap-2">
-        <a routerLink="/inicio/agregar-producto" class="btn btn-success">
-          <i class="bi bi-plus-circle me-1"></i> Agregar Producto
+    <!-- Menú -->
+    <ul class="menu">
+      <li>
+        <a
+          routerLink="/inicio/productos"
+          routerLinkActive="active"
+          class="menu-item"
+        >
+          <i class="bi bi-box-seam"></i>
+          <span>Productos</span>
         </a>
-        <button class="btn btn-outline-danger" (click)="logout()">
-          Cerrar sesión
-        </button>
-      </div>
+      </li>
+      <li>
+        <a
+          routerLink="/inicio/pedidos"
+          routerLinkActive="active"
+          class="menu-item"
+        >
+          <i class="bi bi-cart-fill"></i>
+          <span>Pedidos</span>
+        </a>
+      </li>
+      <!-- li para clientes-->
+      <li>
+        <a
+          routerLink="/inicio/clientes"
+          routerLinkActive="active"
+          class="menu-item"
+        >
+          <i class="bi bi-person-fill"></i>
+          <span>Clientes</span>
+        </a>
+      </li>
+    </ul>
+
+    <!-- Botón de cerrar sesión -->
+    <div class="sidebar-footer">
+      <button class="btn btn-logout" (click)="logout()">
+        <i class="bi bi-box-arrow-right"></i>
+        <span>Cerrar Sesión</span>
+      </button>
     </div>
   </nav>
 
-  <!-- Contenido dinámico -->
-  <div class="mt-4">
-    <router-outlet></router-outlet>
-  </div>
+  <!-- Contenido principal -->
+  <main class="main-content">
+    <div class="content-wrapper">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
 </div>

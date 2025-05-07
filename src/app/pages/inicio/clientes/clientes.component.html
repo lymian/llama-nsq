@@ -1,0 +1,45 @@
+<div class="clients-container">
+  <h2 class="title"><i class="bi bi-people"></i> Listado de Clientes</h2>
+
+  <!-- Lista de clientes -->
+  <div
+    class="clients-grid"
+    *ngIf="clientes && clientes.length > 0; else sinClientes"
+  >
+    <div class="client-card" *ngFor="let cliente of clientes">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <h5 class="card-title">
+            {{ cliente.nombre }} {{ cliente.apellido }}
+          </h5>
+          <ul class="client-info">
+            <li>
+              <span class="label">Correo:</span>
+              <span>{{ cliente.correo }}</span>
+            </li>
+            <li>
+              <span class="label">Teléfono:</span>
+              <span>{{ cliente.telefono }}</span>
+            </li>
+            <li>
+              <span class="label">ID:</span>
+              <span class="text-muted">{{ cliente.id }}</span>
+            </li>
+          </ul>
+          <div class="actions">
+            <button class="btn btn-primary" (click)="verCliente(cliente.id)">
+              <i class="bi bi-eye"></i> Ver Pedidos
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mensaje si no hay clientes -->
+  <ng-template #sinClientes>
+    <div class="alert alert-info">
+      <i class="bi bi-info-circle"></i> No hay clientes registrados.
+    </div>
+  </ng-template>
+</div>

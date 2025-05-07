@@ -1,0 +1,70 @@
+<div class="orders-container">
+  <div class="header">
+    <h2 class="title"><i class="bi bi-list-check"></i> Lista de Pedidos</h2>
+    <div class="filter-buttons">
+      <button class="btn btn-filter" (click)="filtraEstado(0)">
+        Pendientes
+      </button>
+      <button class="btn btn-filter" (click)="filtraEstado(1)">
+        Completados
+      </button>
+    </div>
+  </div>
+
+  <!-- Subtítulo -->
+  <h3 class="subtitle">{{ titulo }}</h3>
+
+  <!-- Lista de pedidos -->
+  <div
+    class="orders-grid"
+    *ngIf="pedidos && pedidos.length > 0; else sinPedidos"
+  >
+    <div class="order-card" *ngFor="let pedido of pedidos">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <h5 class="card-title">Pedido #{{ pedido.boletaId }}</h5>
+          <ul class="order-info">
+            <li>
+              <span class="label">Fecha:</span>
+              <span>{{ pedido.fechaEmision | date : "short" }}</span>
+            </li>
+            <li>
+              <span class="label">Dirección:</span>
+              <span>{{ pedido.direccion }}</span>
+            </li>
+            <li>
+              <span class="label">Estado:</span>
+              <span class="status" [ngClass]="getClaseEstado(pedido.estado)">
+                {{ getNombreEstado(pedido.estado) }}
+              </span>
+            </li>
+          </ul>
+          <div class="actions">
+            <button
+              *ngIf="pedido.estado == 0"
+              class="btn btn-primary"
+              (click)="verDetalles(pedido.boletaId)"
+            >
+              <i class="bi bi-gear"></i> Gestionar
+            </button>
+            <button
+              *ngIf="pedido.estado == 1"
+              class="btn btn-success"
+              (click)="verDetalles(pedido.boletaId)"
+            >
+              <i class="bi bi-eye"></i> Ver Detalles
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mensaje si no hay pedidos -->
+  <ng-template #sinPedidos>
+    <div class="alert alert-info">
+      <i class="bi bi-info-circle"></i> No hay pedidos disponibles por el
+      momento.
+    </div>
+  </ng-template>
+</div>

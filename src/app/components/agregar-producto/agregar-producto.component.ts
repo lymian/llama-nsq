@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductoService } from '../../../services/producto.service';
+import { ProductoService } from '../../services/producto.service';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; // Importar FormsModule para usar ngModel
@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms'; // Importar FormsModule para usar 
 export class AgregarProductoComponent implements OnInit {
 
   nombre: string = '';
-  precio: number = 0;
+  precio: number = 1;
   stock: number = 0;
   descuento: number = 0;
   categoriaId: number = 1;  // Suponemos que la categoría por defecto es 1

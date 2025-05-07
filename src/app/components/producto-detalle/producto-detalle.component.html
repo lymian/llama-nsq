@@ -1,0 +1,85 @@
+<div class="product-details-container">
+  <h2 class="title"><i class="bi bi-info-circle"></i> Detalles del Producto</h2>
+
+  <!-- Mensaje de carga -->
+  <div class="loading" *ngIf="loading">
+    <div class="spinner" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+    <p>Cargando detalles del producto...</p>
+  </div>
+
+  <!-- Mensaje de error -->
+  <div class="error-message" *ngIf="errorMessage">
+    <span>{{ errorMessage }}</span>
+    <button type="button" (click)="errorMessage = ''" class="btn btn-close">
+      Cerrar
+    </button>
+  </div>
+
+  <!-- Detalles del producto -->
+  <div class="product-details" *ngIf="!loading && !errorMessage && producto">
+    <h3 class="product-name">{{ producto.nombre }}</h3>
+
+    <div class="product-content">
+      <!-- Imagen -->
+      <div class="product-image-container">
+        <img
+          [src]="producto.imagen"
+          alt="{{ producto.nombre }}"
+          (error)="imgError($event)"
+          class="product-image"
+        />
+      </div>
+
+      <!-- Información -->
+      <div class="product-info">
+        <div class="info-section">
+          <h4>Información General</h4>
+          <ul class="info-list">
+            <li>
+              <span class="label">Precio:</span>
+              <strong>${{ producto.precio | number : "1.2-2" }}</strong>
+            </li>
+            <li>
+              <span class="label">Stock:</span>
+              <strong>{{ producto.stock }}</strong>
+            </li>
+            <li>
+              <span class="label">Descuento:</span>
+              <strong>{{ producto.descuento }}%</strong>
+            </li>
+          </ul>
+        </div>
+
+        <div class="info-section">
+          <h4>Detalles Adicionales</h4>
+          <ul class="info-list">
+            <li>
+              <span class="label">Categoría:</span>
+              <strong>{{ producto.categoria.nombre }}</strong>
+            </li>
+            <li>
+              <span class="label">Estado:</span>
+              <span
+                class="status"
+                [ngClass]="
+                  producto.estado ? 'status-active' : 'status-inactive'
+                "
+              >
+                {{ producto.estado ? "Disponible" : "No disponible" }}
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botón de retorno -->
+  <div class="actions">
+    <a [routerLink]="['/inicio/productos']" class="btn btn-secondary">
+      <i class="bi bi-arrow-left-circle"></i> Volver a la lista de productos
+    </a>
+  </div>
+</div>
